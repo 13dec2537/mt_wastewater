@@ -33,10 +33,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         stateNetwork.setEnabled(isNetworkConnected);
         edUser.setHint(isNetworkConnected ? "ชื่อผู้ใช้" : "รหัสพนักงาน");
         edPass.setHint(isNetworkConnected ? "รหัสผ่าน" : "รหัสพนักงาน");
-
-
-
-        Log.d("LOG","GIT");
     }
 
     @Override
