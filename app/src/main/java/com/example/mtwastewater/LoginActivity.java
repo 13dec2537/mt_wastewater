@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edPass.setHint(isNetworkConnected ? "รหัสผ่าน" : "รหัสพนักงาน");
 
 
-        
+
     }
 
     @Override
