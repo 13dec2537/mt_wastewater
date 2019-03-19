@@ -66,4 +66,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="titledialog">DialogExcemple</string>
+    <string name="create_date">วันที่ตรวจ</string>
+    <string name="create_user">ชื่อผู้แจ้ง</string>
 </resources>

@@ -1,13 +1,16 @@
 package com.example.mtwastewater;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+
+import java.lang.reflect.Method;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     Core core;
     private Spinner stateNetwork;
@@ -29,10 +32,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
         boolean isNetworkConnected = core.isNetworkConnected();
-        Log.d("LOG", String.valueOf(isNetworkConnected));
         stateNetwork.setEnabled(isNetworkConnected);
         edUser.setHint(isNetworkConnected ? "ชื่อผู้ใช้" : "รหัสพนักงาน");
         edPass.setHint(isNetworkConnected ? "รหัสผ่าน" : "รหัสพนักงาน");
+
     }
 
     @Override
@@ -45,8 +48,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        stateNetwork.clearDisappearingChildren();
+    protected void onResume() {
+        super.onResume();
+        if (stateNetwork != null) {
+            try {
+                Method method = Spinner.class.getDeclaredMethod("onDetachedFromWindow");
+                method.setAccessible(true);
+                method.invoke(stateNetwork);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
