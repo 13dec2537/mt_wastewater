@@ -33,7 +33,6 @@ public class AdapterViewer extends RecyclerView.Adapter<AdapterViewer.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.txtId.setText(String.valueOf(list.get(i).getWaste_id()));
-        Log.d("LOG", String.valueOf(list.get(i).getWaste_id()));
     }
 
     @Override

@@ -3,8 +3,9 @@ package com.example.mtwastewater.Fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -14,33 +15,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.example.mtwastewater.Adapters.AdapterViewer;
-import com.example.mtwastewater.ConfigPath;
+import com.example.mtwastewater.Core;
+import com.example.mtwastewater.InitSharedPreferences;
 import com.example.mtwastewater.Models.Viewer;
+import com.example.mtwastewater.Models.WasteWater;
 import com.example.mtwastewater.R;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.mtwastewater.Constant.BASE_URL;
+import static com.example.mtwastewater.Constant.UID;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ViewerFragment extends Fragment implements View.OnClickListener {
     private Context context;
     private List<Viewer> list = new ArrayList<>();
@@ -48,8 +42,10 @@ public class ViewerFragment extends Fragment implements View.OnClickListener {
     private AdapterViewer adapter;
     private FloatingActionButton floatCreate;
     private DatePickerDialog datePickerDialog;
+    private InitSharedPreferences initSh;
+    private SharedPreferences sh;
     private Calendar c;
-
+    private Core core;
     public ViewerFragment() {
     }
 
@@ -61,23 +57,22 @@ public class ViewerFragment extends Fragment implements View.OnClickListener {
         floatCreate = view.findViewById(R.id.FloatCreate);
         floatCreate.setOnClickListener(this);
         context = view.getContext();
+        core = new Core(context);
+        initSh = new InitSharedPreferences(context);
+        sh = initSh.initShared();
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        AdapterView();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-        ConfigPath configPath = retrofit.create(ConfigPath.class);
-        Call<List<Viewer>> call = configPath.CallViewer();
+        Call<List<Viewer>> call = core.configPath().CallViewer();
         call.enqueue(new Callback<List<Viewer>>() {
             @Override
             public void onResponse(Call<List<Viewer>> call, Response<List<Viewer>> response) {
                 if(response.isSuccessful()){
                     list = response.body();
                     adapter.PushContent(list);
-                    Log.d("LOG", String.valueOf(list.size()));
                 }
             }
 
@@ -86,6 +81,7 @@ public class ViewerFragment extends Fragment implements View.OnClickListener {
                 Log.d("LOG","Viewer onFailure" + throwable);
             }
         });
+        AdapterView();
     }
 
     private void AdapterView() {
@@ -100,10 +96,11 @@ public class ViewerFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.FloatCreate:
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                final Dialog dialog = new Dialog(context);
-                dialog.setTitle(R.string.titledialog);
-                dialog.setContentView(R.layout.fragment_dialog_create);
-                TextView textView = dialog.findViewById(R.id.btnDatePicker);
+                LayoutInflater inflater = getLayoutInflater();
+                View view = inflater.inflate(R.layout.fragment_dialog_create,null);
+                TextView textView = view.findViewById(R.id.btnDatePicker);
+                InitSharedPreferences initSh = new InitSharedPreferences(context);
+                SharedPreferences sh = initSh.initShared();
                 c = Calendar.getInstance();
                 textView.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(c.get(Calendar.MONTH))
                         + "/" + String.valueOf(c.get(Calendar.YEAR)));
@@ -116,18 +113,43 @@ public class ViewerFragment extends Fragment implements View.OnClickListener {
                         datePickerDialog = new DatePickerDialog(context,new DatePickerDialog.OnDateSetListener(){
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                Log.d("LOG", String.valueOf(day));
+                                textView.setText(dayOfMonth + "/" + (month+1) + "/" + year);
                             }
                         },day,month,year);
-
+                        datePickerDialog.updateDate(year,month,day);
                         datePickerDialog.show();
                     }
 
                 });
-                int width = (int)(getResources().getDisplayMetrics().widthPixels*0.80);
-                int height = (int)(getResources().getDisplayMetrics().heightPixels*0.50);
-                dialog.getWindow().setLayout(width,height);
-                dialog.show();
+                builder.setView(view);
+                builder.setTitle(R.string.title_create);
+                builder.setIcon(R.drawable.baseline_create_white_18dp);
+                builder.setPositiveButton(R.string.positivecreate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Call<WasteWater> call = core.configPath().CallCreate("createAndroid",sh.getString(UID,""));
+                        call.enqueue(new Callback<WasteWater>() {
+                            @Override
+                            public void onResponse(Call<WasteWater> call, Response<WasteWater> response) {
+                                if(response.isSuccessful()){
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<WasteWater> call, Throwable throwable) {
+
+                            }
+                        });
+                    }
+                });
+                builder.setNegativeButton(R.string.negativetext, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
                 break;
         }
     }

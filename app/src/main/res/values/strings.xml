@@ -69,4 +69,7 @@
     <string name="titledialog">DialogExcemple</string>
     <string name="create_date">วันที่ตรวจ</string>
     <string name="create_user">ชื่อผู้แจ้ง</string>
+    <string name="negativetext">ยกเลิก</string>
+    <string name="positivecreate">สร้าง</string>
+    <string name="title_create">สร้างใบตรวจสอบคุณภาพน่ำ</string>
 </resources>
