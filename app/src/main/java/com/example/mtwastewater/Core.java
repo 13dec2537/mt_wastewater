@@ -38,7 +38,7 @@ public class Core implements init {
     public static void ReplaceFrag(Context context, Fragment fragment,int layout){
         FragmentManager fm = ((FragmentActivity)context).getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(layout,fragment).commit();
+        ft.replace(layout,fragment).addToBackStack(null).commit();
     }
     public boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

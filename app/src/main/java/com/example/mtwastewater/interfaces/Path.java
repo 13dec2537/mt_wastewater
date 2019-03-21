@@ -1,5 +1,6 @@
 package com.example.mtwastewater.interfaces;
 
+import com.example.mtwastewater.Models.Control;
 import com.example.mtwastewater.Models.Login;
 import com.example.mtwastewater.Models.Viewer;
 import com.example.mtwastewater.Models.WasteWater;
@@ -30,4 +31,8 @@ public interface Path {
     @FormUrlEncoded
     @POST("pdmis/include/model-mtadmin/components/service/ajax_mtwastewater.php")
     Call<WasteWater> CallCreate(@Field("flag") String flag,@Field("uid") String uid);
+
+    @FormUrlEncoded
+    @POST("pdmis/include/sap/components/android/mtwastewater/service.php")
+    Call<List<Control>> CallControl(@Field("flag") String flag);
 }
