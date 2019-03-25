@@ -1,13 +1,14 @@
 package com.example.mtwastewater;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.MenuItem;
 
-import com.example.mtwastewater.Core;
 import com.example.mtwastewater.Fragments.ViewerFragment;
 
 public class MainActivity extends AppCompatActivity {
-    public Core core;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

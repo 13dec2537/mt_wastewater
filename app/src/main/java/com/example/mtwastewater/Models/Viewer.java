@@ -2,7 +2,7 @@ package com.example.mtwastewater.Models;
 
 public class Viewer {
     private int waste_id;
-    private String waste_date,waste_uid,waste_status;
+    private String waste_date,waste_uid,waste_status,name;
 
     public int getWaste_id() {
         return waste_id;
@@ -34,5 +34,13 @@ public class Viewer {
 
     public void setWaste_status(String waste_status) {
         this.waste_status = waste_status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

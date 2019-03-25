@@ -1,8 +1,9 @@
 package com.example.mtwastewater.Models;
 
+import java.util.Arrays;
+
 public class Control {
-    private String flag;
-    private String hourly[];
+    private String flag,type,value;
 
     public String getFlag() {
         return flag;
@@ -12,11 +13,28 @@ public class Control {
         this.flag = flag;
     }
 
-    public String[] getHourly() {
-        return hourly;
+    public String getType() {
+        return type;
     }
 
-    public void setHourly(String[] hourly) {
-        this.hourly = hourly;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Control{" +
+                "flag='" + flag + '\'' +
+                ", type='" + type + '\'' +
+                ", value='" + value + '\'' +
+                '}';
     }
 }

@@ -34,6 +34,7 @@ public class BatchFragment extends Fragment {
     private AdapterControl adapter;
     private RecyclerView recyclerView;
     private List<Control> list = new ArrayList<>();
+    private static final String TAG = "BatchFragment";
     public BatchFragment() {
         // Required empty public constructor
     }
@@ -59,6 +60,7 @@ public class BatchFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Control>> call, Response<List<Control>> response) {
                 list = response.body();
+                Log.d("LOG", String.valueOf(list));
                 adapter.PushContent(response.body());
             }
 

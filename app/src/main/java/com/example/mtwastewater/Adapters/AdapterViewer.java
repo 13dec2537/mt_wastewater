@@ -35,7 +35,9 @@ public class AdapterViewer extends RecyclerView.Adapter<AdapterViewer.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.txtId.setText(String.valueOf(list.get(i).getWaste_id()));
+        viewHolder.txtId.setText("รายการที่ : " + String.valueOf(list.get(i).getWaste_id()));
+        viewHolder.txtDate.setText("วันที่สร้าง : " + String.valueOf(list.get(i).getWaste_date()));
+        viewHolder.txtCreate.setText("ผู้สร้าง : " + String.valueOf(list.get(i).getName()));
         viewHolder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,11 +59,15 @@ public class AdapterViewer extends RecyclerView.Adapter<AdapterViewer.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView txtId;
+        private TextView txtDate;
+        private TextView txtCreate;
         private ConstraintLayout layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtId = itemView.findViewById(R.id.txtId);
             layout = itemView.findViewById(R.id.LayoutViewer);
+            txtDate = itemView.findViewById(R.id.txtDate);
+            txtCreate = itemView.findViewById(R.id.txtCreate);
         }
     }
 }

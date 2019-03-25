@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +45,7 @@ public class ViewerFragment extends Fragment implements View.OnClickListener {
     private DatePickerDialog datePickerDialog;
     private InitSharedPreferences initSh;
     private SharedPreferences sh;
+    private BottomNavigationView bottomNavigationView;
     private Calendar c;
     private Core core;
     public ViewerFragment() {
@@ -54,6 +56,7 @@ public class ViewerFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viewer, container, false);
         recyclerView = view.findViewById(R.id.RecyclerView);
+        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
         floatCreate = view.findViewById(R.id.FloatCreate);
         floatCreate.setOnClickListener(this);
         context = view.getContext();

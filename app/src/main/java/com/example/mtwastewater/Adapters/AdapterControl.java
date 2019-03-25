@@ -8,12 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mtwastewater.Models.Control;
 import com.example.mtwastewater.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterControl extends RecyclerView.Adapter<AdapterControl.ViewHolder> {
@@ -33,19 +33,16 @@ public class AdapterControl extends RecyclerView.Adapter<AdapterControl.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewholder, int i) {
-        Control modal = list.get(i);
-        Log.d("LOG",modal.getHourly()[0]);
-        int count = 0;
-        while (count <= modal.getHourly().length){
-            count++;
+        if(list.get(i).getType().equals("header")){
+            viewholder.layoutHeader.setVisibility(View.VISIBLE);
+            viewholder.layoutChild.setVisibility(View.GONE);
+            viewholder.header.setText(list.get(i).getValue());
+        }else{
+            viewholder.layoutHeader.setVisibility(View.GONE);
+            viewholder.layoutChild.setVisibility(View.VISIBLE);
+            viewholder.row.setText(list.get(i).getValue());
         }
-//        if(modal.getHourly().length){
-//            viewholder.layoutHeader.setVisibility(View.VISIBLE);
-//            viewholder.layoutChild.setVisibility(View.GONE);
-//        }else{
-//            viewholder.layoutHeader.setVisibility(View.GONE);
-//            viewholder.layoutChild.setVisibility(View.VISIBLE);
-//        }
+
     }
 
     @Override
@@ -62,11 +59,14 @@ public class AdapterControl extends RecyclerView.Adapter<AdapterControl.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtTime;
-        private ConstraintLayout layoutHeader,layoutChild;
+        private TextView row;
+        private TextView header;
+        private ConstraintLayout layoutHeader;
+        private LinearLayout layoutChild;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtTime = itemView.findViewById(R.id.time);
+            header = itemView.findViewById(R.id.header);
+            row = itemView.findViewById(R.id.row);
             layoutChild = itemView.findViewById(R.id.LayoutChild);
             layoutHeader = itemView.findViewById(R.id.LayoutHeader);
         }

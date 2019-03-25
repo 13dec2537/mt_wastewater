@@ -42,8 +42,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
         boolean isNetworkConnected = core.isNetworkConnected();
         stateNetwork.setEnabled(isNetworkConnected);
-        edUser.setHint(isNetworkConnected ? "ชื่อผู้ใช้" : "รหัสพนักงาน");
-        edPass.setHint(isNetworkConnected ? "รหัสผ่าน" : "รหัสพนักงาน");
+        core.Login("mongkol","1234");
+//        edUser.setHint(isNetworkConnected ? "ชื่อผู้ใช้" : "รหัสพนักงาน");
+////        edPass.setHint(isNetworkConnected ? "รหัสผ่าน" : "รหัสพนักงาน");
     }
 
 
